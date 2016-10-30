@@ -10,8 +10,8 @@ import getEnvProp from './utils/getEnvProp';
 
 /* ======= Fetching config */
 
-const DEFAULT_VERSION = 3;
-const SUPPORTED_VERSIONS = [3, 4];
+const DEFAULT_VERSION = "3";
+const SUPPORTED_VERSIONS = ["3", "4", "4.0.0-alpha.5"];
 const CONFIG_FILE = '.bootstraprc';
 
 function resolveDefaultConfigPath(bootstrapVersion) {
@@ -55,7 +55,7 @@ Make sure it's set to 3 or 4. Like this:
     `);
   }
 
-  if (SUPPORTED_VERSIONS.indexOf(parseInt(bootstrapVersion, 10)) === -1) {
+  if (SUPPORTED_VERSIONS.indexOf(bootstrapVersion) === -1) {
     throw new Error(`
 Unsupported Bootstrap version in your '.bootstraprc'.
 Make sure it's set to 3 or 4. Like this:
@@ -93,7 +93,7 @@ export default function createConfig({
   if (!userConfigFilePath) {
     const { defaultConfig, configFilePath } = readDefaultConfig();
     return {
-      bootstrapVersion: parseInt(defaultConfig.bootstrapVersion, 10),
+      bootstrapVersion: defaultConfig.bootstrapVersion,
       loglevel: defaultConfig.loglevel,
       useFlexbox: defaultConfig.useFlexbox,
       preBootstrapCustomizations: defaultConfig.preBootstrapCustomizations,
@@ -125,7 +125,7 @@ export default function createConfig({
   );
 
   return {
-    bootstrapVersion: parseInt(userConfig.bootstrapVersion, 10),
+    bootstrapVersion: userConfig.bootstrapVersion,
     loglevel: userConfig.loglevel,
     preBootstrapCustomizations,
     bootstrapCustomizations,

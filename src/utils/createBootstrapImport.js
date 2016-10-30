@@ -1,4 +1,5 @@
 import path from 'path';
+import semver from 'semver';
 
 /**
  * Creates SASS @import string for bootstrap module
@@ -10,7 +11,7 @@ import path from 'path';
  */
 export default function(module, bootstrapVersion, bootstrapPath) {
   const stylesPath = (
-    parseInt(bootstrapVersion, 10) === 3 ?
+    semver.major(bootstrapVersion) === 3 ?
     ['assets', 'stylesheets', 'bootstrap'] :
     ['scss']
   );

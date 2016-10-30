@@ -5,6 +5,7 @@ import getFontsPath from './utils/getFontsPath';
 import createUserImport from './utils/createUserImport';
 import createBootstrapImport from './utils/createBootstrapImport';
 import logger from './utils/logger';
+import semver from 'semver';
 
 /**
  * Bootstrap SASS styles loader
@@ -15,7 +16,7 @@ module.exports = function() {
   if (this.cacheable) this.cacheable();
 
   const config = global.__BOOTSTRAP_CONFIG__;
-  const bootstrapVersion = parseInt(config.bootstrapVersion, 10);
+  const bootstrapVersion = config.bootstrapVersion;
   const {
     styles,
     bootstrapRelPath,
@@ -28,7 +29,7 @@ module.exports = function() {
 
   const processedStyles = [];
 
-  if (bootstrapVersion === 4 && useFlexbox) {
+  if (semver.major(bootstrapVersion) === 4 && useFlexbox) {
     processedStyles.push('$enable-flex: true;');
   }
 
@@ -48,7 +49,7 @@ module.exports = function() {
     createBootstrapImport('variables', bootstrapVersion, bootstrapRelPath)
   );
 
-  if (bootstrapVersion === 3 && !useCustomIconFontPath) {
+  if (semver.major(bootstrapVersion) === 3 && !useCustomIconFontPath) {
     processedStyles.push(
       `$icon-font-path: "${getFontsPath(bootstrapRelPath, this)}";`
     );

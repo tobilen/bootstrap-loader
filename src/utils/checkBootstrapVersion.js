@@ -14,6 +14,6 @@ export default function(bootstrapVersion, bootstrapPath) {
 
   return {
     version: npmVersion,
-    allGood: semver.major(npmVersion) === bootstrapVersion,
+    allGood: semver.major(npmVersion) === semver.major(bootstrapVersion)
   };
 }

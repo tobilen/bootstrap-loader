@@ -9,11 +9,18 @@ import path from 'path';
  * @returns {string}
  */
 export default function(module, bootstrapVersion, bootstrapPath) {
-  const scriptsPath = (
-    parseInt(bootstrapVersion, 10) === 3 ?
-    ['assets', 'javascripts', 'bootstrap'] :
-    ['js', 'dist']
-  );
+  var scriptsPath
+  switch(bootstrapVersion) {
+    case "4.0.0-alpha.5":
+      scriptsPath = ['js', 'dist']
+      break;
+    case "4":
+      scriptsPath = ['dist', 'js', 'umd']
+      break;
+    case "3":
+      scriptsPath = ['assets', 'javascripts', 'bootstrap']
+      break;
+  }
   const bootstrapModule = path.join(bootstrapPath, ...scriptsPath, module);
   return `require (${JSON.stringify(bootstrapModule)});`;
 }
